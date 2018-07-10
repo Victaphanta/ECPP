@@ -1,4 +1,4 @@
-**ECPP**
+# **ECPP**
 
 Exon Capture for Phylogenetics
 
