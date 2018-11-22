@@ -11,14 +11,15 @@ pip install dendropy
 pip install numpy
 pip install biopython
 
-echo export PATH=$PATH:/usr/local/bin/spade/bin:/usr/local/bin/trinity:/usr/local/bin/bbmap:/usr/local/bin/bowtie2:/usr/local/bin/blast+/bin:/usr/local/share/util >> .bashrc
-echo "alias varscan='java -jar /usr/local/bin/varscan.jar'" >> .bashrc
-echo "alias trimmomatic='java -jar /usr/local/bin/trimmomatic.jar'" >> .bashrc
+echo export PATH=$PATH:/usr/local/bin/spade/bin:/usr/local/bin/trinity:/usr/local/bin/bbmap:/usr/local/bin/bowtie2:/usr/local/bin/blast+/bin:/usr/local/share/util >> ~/.bashrc
+echo "alias varscan='java -jar /usr/local/bin/varscan.jar'" >> ~/.bashrc
+echo "alias trimmomatic='java -jar /usr/local/bin/trimmomatic.jar'" >> ~/.bashrc
 
 git clone https://github.com/Victaphanta/ECPP.git
-pigz -dc ECPP/ECPP.tar.gz | tar xf - && rm ECPP/ECPP.tar.gz
+#pigz -dc ECPP/ECPP.tar.gz | tar xf - && rm ECPP/ECPP.tar.gz
 chmod -R 777 /usr/local/src/ECPP
-mv ECPP/* /usr/local/bin
+mv ECPP/ECPP_1.1.0.sh /usr/local/bin
+mv ECPP/EssentialScripts/* /usr/local/bin
 rm -rf ECPP
 
 git clone https://github.com/lh3/seqtk.git
