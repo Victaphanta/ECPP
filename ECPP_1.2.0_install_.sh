@@ -3,7 +3,8 @@ cd /usr/local/src
 apt-get update
 
 apt-get --assume-yes install build-essential git wget python python-pip pigz libz-dev default-jre unzip libtbb-dev libncurses-dev curl libssl-dev gcc autoconf automake pkg-config nano
-apt install --assume-yes cmake
+apt install --assume-yes cmake openjdk-8-jdk
+
 
 pip install dendropy
 pip install numpy
@@ -16,7 +17,7 @@ echo "alias trimmomatic='java -jar /usr/local/bin/trimmomatic.jar'" >> ~/.bashrc
 git clone https://github.com/Victaphanta/ECPP.git
 #pigz -dc ECPP/ECPP.tar.gz | tar xf - && rm ECPP/ECPP.tar.gz
 chmod -R 777 /usr/local/src/ECPP
-mv ECPP/ECPP_1.1.0.sh /usr/local/bin
+mv ECPP/ECPP_1.2.1.sh /usr/local/bin
 mv ECPP/EssentialScripts/* /usr/local/bin
 rm -rf ECPP
 
@@ -51,6 +52,28 @@ git clone https://github.com/trinityrnaseq/trinityrnaseq.git
 make -C trinityrnaseq/ 
 mv trinityrnaseq /usr/local/bin/trinity
 rm -rf trinityrnaseq
+
+#This fails!!
+#git clone https://github.com/gmarcais/Jellyfish.git
+#cd Jellyfish
+#./configure --prefix=$HOME
+#make -j 4
+#make install
+#try apt version
+apt
+
+#This fails!!
+#git clone https://github.com/COMBINE-lab/salmon.git
+#cd salmon
+#cmake -DFETCH_BOOST=TRUE
+#make 
+#make install
+
+#Get precompiled
+wget 'https://github.com/COMBINE-lab/salmon/releases/download/v0.11.3/salmon-0.11.3-linux_x86_64.tar.gz'
+pigz -dc salmon-0.11.3-linux_x86_64.tar.gz | tar xf -
+
+
 
 curl -O http://www.usadellab.org/cms/uploads/supplementary/Trimmomatic/Trimmomatic-0.36.zip
 unzip Trimmomatic-0.36.zip
