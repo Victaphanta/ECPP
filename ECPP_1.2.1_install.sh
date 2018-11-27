@@ -83,9 +83,10 @@ cd ..
 rm -rf vcftools
 
 wget 'ftp://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/LATEST/ncbi-blast-2.7.1+-x64-linux.tar.gz'
-pigz -d ncbi-blast-2.7.1+-x64-linux.tar.gz | tar xf -
+pigz -d ncbi-blast-2.7.1+-x64-linux.tar.gz 
+tar xvpf ncbi-blast-2.7.1+-x64-linux.tar
 mv ncbi-blast-2.7.1+ /usr/local/bin/blast+/
-#rm -rf ncbi-blast-2.6.0+-x64-linux.tar 
+#rm -rf ncbi-blast-2.7.1+-x64-linux.tar 
 
 wget http://last.cbrc.jp/last-869.zip
 unzip last-869.zip

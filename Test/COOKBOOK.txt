@@ -9,11 +9,11 @@
 -a Reference.exons.aa.fas \
 -t 50 2>&1 | tee TEST.02.ASSEMBLY.1.2.1.log
 
-./ECPP_1.1.0.sh -m map \
--s SpeciesList.5.txt \
--e Reference.exons.aa.fas \
--p 50 2>&1 | tee TEST.03.MAP.log
+./ECPP_1.2.1.sh -m map \
+-p SpeciesList.5.txt \
+-a Reference.exons.aa.fas \
+-t 50 2>&1 | tee TEST.03.MAP.log
 
-./ECPP_1.2.0.sh -m align \
+./ECPP_1.2.1.sh -m align \
 -p SpeciesList.5.txt \
 -t 50  2>&1 | tee TEST.04.ALIGN.log
