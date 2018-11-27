@@ -2,9 +2,7 @@
 cd /usr/local/src
 apt-get update
 
-apt-get --assume-yes install build-essential git wget python python-pip pigz libz-dev default-jre unzip libtbb-dev libncurses-dev curl libssl-dev gcc autoconf automake pkg-config nano
-apt install --assume-yes cmake openjdk-8-jdk
-
+apt-get --assume-yes install build-essential git wget python python-pip pigz libz-dev default-jre unzip libtbb-dev libncurses-dev curl libssl-dev gcc autoconf automake pkg-config nano cmake
 
 pip install dendropy
 pip install numpy
@@ -15,7 +13,6 @@ echo "alias varscan='java -jar /usr/local/bin/varscan.jar'" >> ~/.bashrc
 echo "alias trimmomatic='java -jar /usr/local/bin/trimmomatic.jar'" >> ~/.bashrc
 
 git clone https://github.com/Victaphanta/ECPP.git
-#pigz -dc ECPP/ECPP.tar.gz | tar xf - && rm ECPP/ECPP.tar.gz
 chmod -R 777 /usr/local/src/ECPP
 mv ECPP/ECPP_1.2.1.sh /usr/local/bin
 mv ECPP/EssentialScripts/* /usr/local/bin
@@ -85,10 +82,9 @@ make install
 cd ..
 rm -rf vcftools
 
-wget 'ftp://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/LATEST/ncbi-blast-2.6.0+-x64-linux.tar.gz'
-pigz -d ncbi-blast-2.6.0+-x64-linux.tar.gz
-tar xvpf ncbi-blast-2.6.0+-x64-linux.tar
-mv ncbi-blast-2.6.0+ /usr/local/bin/blast+/
+wget 'ftp://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/LATEST/ncbi-blast-2.7.1+-x64-linux.tar.gz'
+pigz -d ncbi-blast-2.7.1+-x64-linux.tar.gz | tar xf -
+mv ncbi-blast-2.7.1+ /usr/local/bin/blast+/
 #rm -rf ncbi-blast-2.6.0+-x64-linux.tar 
 
 wget http://last.cbrc.jp/last-869.zip
