@@ -414,7 +414,7 @@ echo "sample name list = $ARG_P"
 echo "amino acid reference = $ARG_A"
 echo "number of threads for multi-thread steps = $ARG_T"
 
-esweep_linux_v1 \
+esweep \
 	-i $PWD/4_map \
 	-o $PWD/5_align.T$Ntaxa \
 	-t $PWD/$ARG_P \
@@ -446,14 +446,14 @@ mv $PWD/5_align.T$Ntaxa/matrix_length.csv  $PWD/5_align.T$Ntaxa/matrix_lengthT.$
 
 cat $PWD/7_sum/exonheaders.unique.txt | while read exons
 do
-	echo "Processing $PWD/5_align.T$Ntaxa/${exons}_unaligned.fasta"
-	perl -i -nle "s/-|~|n/N/g unless $. & 1; print " $PWD/5_align.T$Ntaxa/${exons}_unaligned.fasta && 
-	degapcodon2.pl $PWD/5_align.T$Ntaxa/${exons}_unaligned.fasta > $PWD/5_align.T$Ntaxa/${exons}_unalignedDG.fasta &&
+	echo "Processing $PWD/5_align.T$Ntaxa/${exons}_aligned.fasta"
+	perl -i -nle "s/-|~|n/N/g unless $. & 1; print " $PWD/5_align.T$Ntaxa/${exons}_aligned.fasta && 
+	degapcodon2.pl $PWD/5_align.T$Ntaxa/${exons}_aligned.fasta > $PWD/5_align.T$Ntaxa/${exons}_alignedDG.fasta &&
 	alignAM.py \
 		-prot_outfile $PWD/5_align.T$Ntaxa/${exons}_mafft_aa.fasta \
 		-nuc_outfile $PWD/5_align.T$Ntaxa/${exons}_mafft_nt.fasta \
 		-aligner mafft -options " --quiet --localpair --maxiterate 1000 --reorder --anysymbol --thread -1 " \
-		$PWD/5_align.T$Ntaxa/${exons}_unalignedDG.fasta ; #rm $PWD/5_align.T$Ntaxa/${exons}_unalignedDG.fasta $PWD/5_align.T$Ntaxa/${exons}_unaligned.fasta &&
+		$PWD/5_align.T$Ntaxa/${exons}_alignedDG.fasta ; #rm $PWD/5_align.T$Ntaxa/${exons}_unalignedDG.fasta $PWD/5_align.T$Ntaxa/${exons}_unaligned.fasta &&
 
 	perl -i -nle "s/n|N/-/g unless $. & 1; print " $PWD/5_align.T$Ntaxa/${exons}_mafft_nt.fasta && 
 	selectSites.pl -x 3 $PWD/5_align.T$Ntaxa/${exons}_mafft_nt.fasta > $PWD/5_align.T$Ntaxa/${exons}_mafft_nt_trim.fasta; rm $PWD/5_align.T$Ntaxa/${exons}_mafft_nt.fasta $PWD/5_align.T$Ntaxa/${exons}_mafft_aa.fasta
@@ -491,7 +491,7 @@ echo "number of threads for multi-thread steps = $ARG_T"
 echo "subset sample name list = $ARG_F"
 echo "subset exon name list = $ARG_E"
 
-esweep_linux_v1 \
+esweep \
 	-i $PWD/5_align.T$Ntaxa \
 	-o $PWD/6_Final_Alignments.T$subtaxa.E$subexon \
 	-n $PWD/$ARG_F \
@@ -551,7 +551,7 @@ do
 
 done
 ######## REPEAT ESWEEP HERE SUCH THAT THE FINAL COMBINED.NEX PARTITION INFORMATION IS UPDATED.
-esweep_linux_v1 \
+esweep \
 	-i $PWD/6_Final_Alignments.T$subtaxa.E$subexon/ \
 	-o $PWD/6_Final_Alignments.T$subtaxa.E$subexon/ \
 	-n $PWD/$ARG_F \
@@ -568,18 +568,3 @@ cat $PWD/6_Final_Alignments.T$subtaxa.E$subexon/*len1.txt > $PWD/6_Final_Alignme
 cat $PWD/6_Final_Alignments.T$subtaxa.E$subexon/*len2.txt > $PWD/6_Final_Alignments.T$subtaxa.E$subexon/Alignmentlength2.txt && rm $PWD/6_Final_Alignments.T$subtaxa.E$subexon/*len2.txt
 echo "FINAL ALIGNMENTS COMPLETE"
 fi
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
