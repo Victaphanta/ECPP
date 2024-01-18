@@ -1,0 +1,51 @@
+# Please change path to raw sequences to current location on you system. 
+# This is the only hardwired path that you need to specify, all remaining
+# folder structure is automated.
+
+# Also change threads -t to best suite your system.
+
+# FIRST DEDUPLICATE, SUBSET AND CLEAN THE RAW READS.
+
+apptainer exec -e -H $PWD --unsquash ECPP1.3.2.sif ECPP_1.3.2.sh \
+-m clean \
+-r /XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Test/0_raw/ \
+-p SpeciesList.5.txt \
+-a Reference.exons.aa.fas \
+-t 30 2>&1 | tee TEST.01.CLEAN.1.2.1.log
+
+# If you get through the first module then feel free to move straight on 
+# to running the whole pipeline on your own data.  If you want to make absolutely sure 
+# (e.g. before place a large dataset on a HPC cluster), then run all modules.
+# The assembly will be the bottlneck, taking aprroximatley 20-40 minutes
+# depending on your system. It is on my list  of things to do to produce a smaller, 
+# tighter test dataset.
+
+# SECOND, ASSEMBLE USING THE CLEAN READS.
+
+apptainer exec -e -H $PWD --unsquash ECPP1.3.2.sif ECPP_1.3.2.sh \
+-m trinity \
+-p SpeciesList.5.txt \
+-a Reference.exons.aa.fas \
+-t 30 2>&1 | tee TEST.02.ASSEMBLY.1.2.1.log
+
+# THIRD, MAP CLEANED READ ON "SAMPLE SPECIFIC" REFERENCE, AND VARIANT CALL.
+
+apptainer exec -e -H $PWD --unsquash ECPP1.3.2.sif ECPP_1.3.2.sh \
+-m map \
+-p SpeciesList.5.txt \
+-a Reference.exons.aa.fas \
+-t 30 2>&1 | tee TEST.03.MAP.log
+
+# FOURTH, DERIVE ALIGNMENTS OF ALL SAMPLES PER EXONS.
+
+apptainer exec -e -H $PWD --unsquash ECPP1.3.2.sif ECPP_1.3.2.sh \
+-m align \
+-p SpeciesList.5.txt \
+-a Reference.exons.aa.fas \
+-t 30  2>&1 | tee TEST.04.ALIGN.log
+
+# This will produce a file "matrix_length.T5.E2724.csv" found in the folder "5_alin.Txxx".  Open this csv file in Excel.
+# Summarise/tally successful captures per exon, e.g. countif ( ), and summarise per sample.  Sort the table by samples 
+# and exons based on the tally count.  Then you decide which samples and exons to keep for the final polished alignments.
+
+#FIFTH,  
