@@ -48,4 +48,17 @@ apptainer exec -e -H $PWD --unsquash ECPP1.3.2.sif ECPP_1.3.2.sh \
 # Summarise/tally successful captures per exon, e.g. countif ( ), and summarise per sample.  Sort the table by samples 
 # and exons based on the tally count.  Then you decide which samples and exons to keep for the final polished alignments.
 
-#FIFTH,  
+# FIFTH, REPEAT ALIGNMENT FOR ONLY A "SUBSET" OF SAMPLES AND EXONS.
+# This round of alignments has additional polishing.  Better product.
+# Used to remove exons[-e] or samples [-f]that were poorly captured.
+# Aim for something like 80% completeness.
+# Important that you use the -p switch again, which indicated the number of taxa processed in the last step.  
+# This is needed so it find the right folder. 
+
+apptainer exec -e -H $PWD --unsquash ECPP1.3.2.sif ECPP_1.3.2.sh \
+-m subset \
+-p SpeciesList.5.txt \
+-f SpeciesList.subset.X.txt
+-e ExonList.subset.X.txt
+-t 30  2>&1 | tee TEST.05.FINALALIGNMENT.log
+
